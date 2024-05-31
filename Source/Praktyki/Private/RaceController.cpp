@@ -31,13 +31,13 @@ void ARaceController::BeginPlay()
 	ForwardVector = GetActorForwardVector();
 	GameState->StartRaceTimer();
 
-	LapsToDo = GameState->LapsToDoOverall;
+	LapsToDo = GameState->AllLapsToDo;
 }
 
 void ARaceController::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
                                      class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor && Cast<AVehiclePawn>(OtherActor) && OtherComp)
+	if (OtherActor && Cast<AVehiclePawn>(OtherActor))
 	{
 		const FVector OtherActorLocation = OtherActor->GetActorLocation();
 		FVector ToOtherActor = OtherActorLocation - GetActorLocation();
@@ -56,15 +56,18 @@ void ARaceController::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 
 void ARaceController::OnEnterFromFront()
 {
-	WrongWayCounter++; // bad
+	// bad. don't do that pls.
+	bWrongWay = true;
 }
 
 void ARaceController::OnEnterFromBack()
 {
-	WrongWayCounter--;
-	if(WrongWayCounter > 0)
+	if(bWrongWay)
+	{
+		bWrongWay = false;
 		return;
-
+	}
+	
 	LapsToDo--;
 	if(LapsToDo > 0)
 		GameState->Lap();

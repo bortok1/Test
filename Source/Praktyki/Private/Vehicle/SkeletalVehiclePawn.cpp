@@ -36,6 +36,8 @@ ASkeletalVehiclePawn::ASkeletalVehiclePawn()
 	UGearboxComponent* GearBox = CreateDefaultSubobject<UGearboxComponent>(FName("GearboxComponent"));
 	GearBox->SetSteeringManager(SteeringManager);
 	SteeringManager->SetGearBox(GearBox);
+
+	SetupCamera();
 }
 
 void ASkeletalVehiclePawn::BeginPlay()
@@ -47,6 +49,8 @@ void ASkeletalVehiclePawn::BeginPlay()
 
 void ASkeletalVehiclePawn::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
+	
 	// Info on order of Wheels in TArray<FName> WheelNames (27)
 	RotateDrivingWheels(SkeletalComponent->FrontRightWheelMeshes, WheelComponents[0], DeltaSeconds, true);
 	RotateDrivingWheels(SkeletalComponent->FrontLeftWheelMeshes, WheelComponents[1], DeltaSeconds);

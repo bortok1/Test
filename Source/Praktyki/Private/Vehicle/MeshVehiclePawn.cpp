@@ -31,4 +31,6 @@ AMeshVehiclePawn::AMeshVehiclePawn()
 	UGearboxComponent* GearBox = CreateDefaultSubobject<UGearboxComponent>(FName("GearboxComponent"));
 	GearBox->SetSteeringManager(SteeringManager);
 	SteeringManager->SetGearBox(GearBox);
+	
+	SetupCamera();
 }

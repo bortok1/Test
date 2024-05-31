@@ -41,8 +41,6 @@ void UWheelComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	{
 		const FVector FrictionBreaking = CalculateBreakInVector(GetForwardVector(), SteeringManager->FrictionBreakingForce, SteeringManager->FrictionBreakingEfficacyCurve);
 		const FVector Force = CalculateHoverVector() + CalculateForwardVector() + CalculateSideSlide() + FrictionBreaking;
-		const FVector Location = GetComponentLocation();
-		DrawDebugLine(GetWorld(), Location, Location + Force, FColor::Green);
 		SteeringManager->Body->AddForceAtLocation(Force, this->GetComponentLocation());
 	}
 }

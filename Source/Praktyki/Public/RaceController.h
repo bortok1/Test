@@ -29,9 +29,8 @@ protected:
 	class UArrowComponent* FrontArrow;
 
 private:
-	UPROPERTY()
-	int WrongWayCounter = 0;
-
+	bool bWrongWay = false;
+	
 	UPROPERTY()
 	int LapsToDo = 1;
 	

@@ -32,7 +32,7 @@ void ARaceState::Lap()
 		return;
 	
 	const float LapTime = GetWorld()->GetTimeSeconds() - LapStartTime;
-	if(BestLapTime < LapTime)
+	if(BestLapTime >= LapTime)
 	{
 		BestLapTime = LapTime;
 	}
@@ -49,6 +49,8 @@ void ARaceState::StopRaceTimer()
 	ElapsedRaceTime = GetWorld()->GetTimeSeconds() - RaceStartTime;
 	
 	Lap();
+	
+	EndRaceEvent();
 }
 
 void ARaceState::UpdateRaceTime()

@@ -56,6 +56,7 @@ public:
 
 	void GearDown();
 
+	UFUNCTION(BlueprintCallable)
 	FGearData& GetGearData();
 	
 	void SetSteeringManager(USteeringManager* Manager);
