@@ -3,7 +3,6 @@
 
 #include "Vehicle/SkeletalVehiclePawn.h"
 
-#include "Vehicle/Components/GearboxComponent.h"
 #include "Vehicle/Components/SteeringManager.h"
 #include "Vehicle/Components/VehicleSkeletalMesh.h"
 #include "Vehicle/Components/WheelComponent.h"
@@ -21,8 +20,6 @@ ASkeletalVehiclePawn::ASkeletalVehiclePawn()
 	SkeletalComponent->SetSkeletalMesh(SkeletalMesh);
 	SkeletalComponent->SetCollisionProfileName("PhysicsActor");
 	SkeletalComponent->SetSimulatePhysics(true);
-
-	SteeringManager = CreateDefaultSubobject<USteeringManager>(TEXT("SteeringManager"));
 	
 	TArray<FName> WheelNames = { "WheelFR", "WheelFL", "WheelRR", "WheelRL" };
 	
@@ -33,10 +30,6 @@ ASkeletalVehiclePawn::ASkeletalVehiclePawn()
 		Wheel->SetupAttachment(SkeletalComponent);
 	}
 	
-	UGearboxComponent* GearBox = CreateDefaultSubobject<UGearboxComponent>(FName("GearboxComponent"));
-	GearBox->SetSteeringManager(SteeringManager);
-	SteeringManager->SetGearBox(GearBox);
-
 	SetupCamera();
 }
 

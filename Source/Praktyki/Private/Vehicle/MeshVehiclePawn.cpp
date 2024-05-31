@@ -2,8 +2,6 @@
 
 
 #include "Vehicle/MeshVehiclePawn.h"
-#include "Vehicle/Components/GearboxComponent.h"
-#include "Vehicle/Components/SteeringManager.h"
 #include "Vehicle/Components/WheelComponent.h"
 
 
@@ -16,8 +14,6 @@ AMeshVehiclePawn::AMeshVehiclePawn()
 	MeshComponent->SetCollisionProfileName("PhysicsActor");
 	MeshComponent->SetSimulatePhysics(true);
 	RootComponent = MeshComponent;
-
-	SteeringManager = CreateDefaultSubobject<USteeringManager>(TEXT("SteeringManager"));
 	
 	TArray<FName> WheelNames = { "WheelFR", "WheelFL", "WheelRR", "WheelRL" };
 	
@@ -27,10 +23,6 @@ AMeshVehiclePawn::AMeshVehiclePawn()
 		WheelComponents.Add(Wheel);
 		Wheel->SetupAttachment(MeshComponent);
 	}
-	
-	UGearboxComponent* GearBox = CreateDefaultSubobject<UGearboxComponent>(FName("GearboxComponent"));
-	GearBox->SetSteeringManager(SteeringManager);
-	SteeringManager->SetGearBox(GearBox);
 	
 	SetupCamera();
 }

@@ -88,9 +88,7 @@ public:
 	UPROPERTY(EditAnywhere, Category="CameraMovement")
 	float AutoRotationSpeed = 10.f;
 	UPROPERTY(EditAnywhere, Category="CameraMovement")
-	float HandRotationSpeed = 0.3f;
-	UPROPERTY(EditAnywhere, Category="CameraMovement")
-	float FirstSpringArmRotationPitch = -15.f;
+	float HandRotationSpeed = 1.f;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USpringArmComponent* SpringArm = nullptr;

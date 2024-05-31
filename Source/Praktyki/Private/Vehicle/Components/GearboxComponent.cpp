@@ -2,7 +2,6 @@
 
 
 #include "Vehicle/Components/GearboxComponent.h"
-
 #include "Vehicle/Components/SteeringManager.h"
 
 UGearboxComponent::UGearboxComponent()
@@ -54,7 +53,7 @@ float UGearboxComponent::CalculateTorque(const float Velocity)
 	}
 	const FGearData ThisGearData = GetGearData();
 
-	const float VelocityPercent = (abs(Velocity) - ThisGearData.MinVelocity) / (ThisGearData.MaxVelocity - ThisGearData.MinVelocity);
+	const float VelocityPercent = (FMath::Abs(Velocity) - ThisGearData.MinVelocity) / (ThisGearData.MaxVelocity - ThisGearData.MinVelocity);
 	
 	return SteeringManager->GearTorqueCurve->GetFloatValue(VelocityPercent);
 }

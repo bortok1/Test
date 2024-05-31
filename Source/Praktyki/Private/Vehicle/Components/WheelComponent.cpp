@@ -4,7 +4,6 @@
 #include "Vehicle/Components/WheelComponent.h"
 
 #include "RaceState.h"
-#include "VectorTypes.h"
 #include "Vehicle/Components/GearboxComponent.h"
 #include "Vehicle/Components/SteeringManager.h"
 
@@ -70,10 +69,10 @@ FVector UWheelComponent::CalculateForwardVector() const
 
 	const FVector ForwardVector = GetForwardVector();
 	const FVector Velocity = SteeringManager->Body->GetPhysicsLinearVelocityAtPoint(GetComponentLocation());
-	const float VelocityForward = UE::Geometry::Dot(ForwardVector, Velocity) * CONVERT_CMS_TO_KMH;
+	const float VelocityForward = ForwardVector.Dot(Velocity) * CONVERT_CMS_TO_KMH;
 
 	if(FMath::Sign(VelocityForward) == FMath::Sign(SteeringManager->ForwardInputValue) ||
-		abs(VelocityForward) < 1.f)
+		FMath::Abs(VelocityForward) < 1.f)
 	{
 		// Player wants to move
 		const float Force = SteeringManager->GearBox->CalculateTorque(VelocityForward)
@@ -106,8 +105,8 @@ FVector UWheelComponent::CalculateSideSlide() const
 
 FVector UWheelComponent::CalculateBreakInVector(const FVector& BreakingVector, const float BreakForce, UCurveFloat* BreakingCurve) const
 {
-	const float SteeringVel = UE::Geometry::Dot(BreakingVector, TireWorldVel);
-	const float PartVelInBreakingDir = abs(SteeringVel) / TireWorldVel.Size();
+	const float SteeringVel = BreakingVector.Dot(TireWorldVel);
+	const float PartVelInBreakingDir = FMath::Abs(SteeringVel) / TireWorldVel.Size();
 	const float PartVelToMaxVel =  SteeringVel / SteeringManager->MaxVelocity;
 
 	const float BreakingEfficacy = BreakingCurve->GetFloatValue(PartVelToMaxVel * PartVelInBreakingDir);

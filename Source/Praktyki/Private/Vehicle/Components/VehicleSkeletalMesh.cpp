@@ -2,7 +2,6 @@
 
 
 #include "Vehicle/Components/VehicleSkeletalMesh.h"
-
 #include "Vehicle/VehicleDataAsset.h"
 
 UVehicleSkeletalMesh::UVehicleSkeletalMesh()
@@ -94,8 +93,6 @@ void UVehicleSkeletalMesh::BeginPlay()
 			if (ChildName.Contains("Brake_Disc") || ChildName.Contains("Rear_Wheel") || ChildName.Contains("Front_Wheel"))
 				DriveRearRightWheelMeshes.Add(Cast<UStaticMeshComponent>(Child));
 		}
-
-		
 	}
 
 	for (USceneComponent* Child : Interior->GetAttachChildren())

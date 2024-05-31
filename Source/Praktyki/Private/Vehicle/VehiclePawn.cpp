@@ -6,9 +6,15 @@
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Vehicle/Components/GearboxComponent.h"
+#include "Vehicle/Components/SteeringManager.h"
 
 AVehiclePawn::AVehiclePawn()
 {
+	SteeringManager = CreateDefaultSubobject<USteeringManager>(TEXT("SteeringManager"));
+	UGearboxComponent* GearBox = CreateDefaultSubobject<UGearboxComponent>(FName("GearboxComponent"));
+	GearBox->SetSteeringManager(SteeringManager);
+	SteeringManager->SetGearBox(GearBox);
 }
 
 void AVehiclePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -86,7 +92,6 @@ void AVehiclePawn::SetupCamera()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->TargetArmLength = 300.0f;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritRoll = false;
 	SpringArm->bEnableCameraLag = true;
@@ -119,7 +124,7 @@ float AVehiclePawn::GetRotationDifference(const float A, const float B, const fl
 		Diff += 360.0f;
 	}
 	
-	if(abs(Diff) < ErrorMargin)
+	if(FMath::Abs(Diff) < ErrorMargin)
 		return 0.f;
 	
 	return Diff;

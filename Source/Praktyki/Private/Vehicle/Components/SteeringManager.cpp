@@ -4,7 +4,6 @@
 #include "Vehicle/Components/SteeringManager.h"
 
 #include "ComponentReregisterContext.h"
-#include "VectorTypes.h"
 #include "Vehicle/MeshVehiclePawn.h"
 #include "Vehicle/SkeletalVehiclePawn.h"
 #include "Vehicle/VehiclePawn.h"
@@ -153,7 +152,7 @@ void USteeringManager::SetGearBox(UGearboxComponent* GearboxComponent)
 void USteeringManager::HandleSteeringRotation(const float DeltaTime)
 {
 	// Give keyboard player better control at high speed
-	const float PercentVelocityForward = abs(UE::Geometry::Dot(Body->GetForwardVector(), Body->GetPhysicsLinearVelocity())) * CONVERT_CMS_TO_KMH / MaxVelocity;
+	const float PercentVelocityForward = FMath::Abs(Body->GetForwardVector().Dot(Body->GetPhysicsLinearVelocity())) * CONVERT_CMS_TO_KMH / MaxVelocity;
 	const float MaxSteeringPercent = 1 - FMath::Tanh(PercentVelocityForward);
 	const float SteeringStepPercent = SteeringStep * MaxSteeringPercent;
 
@@ -185,7 +184,7 @@ void USteeringManager::HandleSteeringRotation(const float DeltaTime)
 	// Move towards desired rotation
 	const float DesiredRotation = MaxSteeringPercent * RightInputValue;			// Here I want to end up in few frames
 	const float RotationThisFrame = SteeringStepPercent * DeltaTime;			// This much I can rotate in this frame
-	const float RotationToGetThru = abs(DesiredRotation - SteeringPercent);	// This much rotation I need overall
+	const float RotationToGetThru = FMath::Abs(DesiredRotation - SteeringPercent);	// This much rotation I need overall
 
 	if(RotationToGetThru >= RotationThisFrame)
 	{
